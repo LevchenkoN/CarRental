@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>ВІДДІЛЕННЯ</title>
+</head>
+
+<body>
+
+<!-- add navbar -->
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+<div class="container">
+    <h1 class="display-4 text-center">Наші відділення</h1>
+    <p class="lead text-center text-muted">Тут зібрані адреси пунктів прокату де ви можете отримати/повернути автомобіль</p>
+    <br><br>
+
+    <table class="table table-bordered table-responsive-sm" style="background-color: lightcyan;">
+        <thead class="thead-dark">
+
+        <tr>
+            <th>Місто</th>
+            <th>Адреса</th>
+            <th>Контакти</th>
+        </tr>
+        </thead>
+
+        <tr th:each="tempLocation : ${locations}">
+
+            <td th:text="${tempLocation.city}" />
+            <td th:text="${tempLocation.Address}" />
+            <td th:text="${tempLocation.phoneNumber}" />
+
+    </table>
+    <br><br>
+</div>
+<br><br>
+</body>
+</html>

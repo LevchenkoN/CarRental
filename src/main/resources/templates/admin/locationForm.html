@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>ЗБЕРЕГТИ ВІДДІЛЕННЯ</title>
+</head>
+<body>
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+
+<div class="container">
+
+    <div class=container>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <br>
+                <h2>Зберегти відділення</h2>
+                <hr>
+            </div>
+        </div>
+        <form class="form-horizontal" role="form" th:action="@{/admin/saveLocation}" method="POST"
+              enctype="multipart/form-data"
+              th:object="${location}">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="city">Місто</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fas fa-city"></i>
+                            </div>
+                            <input type="text" th:field="${location.city}" class="form-control" id="city" name="city"
+                                   placeholder="City" required autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="address">Адреса</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <input type="text" th:field="${location.address}" class="form-control" id="address"
+                                   name="address"
+                                   placeholder="Address" required autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="phoneNumber">Номер телефону</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fas fa-phone-square"></i>
+                            </div>
+                            <input type="number" th:field="${location.phoneNumber}"
+                                   class="form-control" id="phoneNumber" name="phoneNumber"
+                                   placeholder="Phone number" required autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-success btn-md">Зберегти</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <a th:href="@{/admin}">Повернутися до сторінки адміністратора</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<th:block th:fragment="nav">
+    <div th:fragment="nav">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkgoldenrod;">
+            <a class="navbar-brand" href="/"><img th:src="@{/images/logo.png}" th:width="130" class="img-fluid"
+                                                  alt="Logo"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" th:href="@{/}">ГОЛОВНА СТОРІНКА</a>
+                    <a class="nav-item nav-link" th:href="@{/home/cars}">АВТОПАРК</a>
+                    <a class="nav-item nav-link" th:href="@{/home/departments}">НАШІ ВІДДІЛЕННЯ</a>
+                    <a class="nav-item nav-link" th:href="@{/home/aboutus}">ПРО НАС</a>
+                    <span class="navbar-nav" th:if="${user!=null}">
+                        <a class="nav-item nav-link" th:href="@{/home/account}">МІЙ ПРОФІЛЬ</a>
+                        <span th:if="${user.isAdmin == true}">
+                            <a class="nav-item nav-link" th:href="@{/admin}">СТОРІНКА АДМІНА</a>
+                        </span>
+                        <a class="nav-item nav-link" th:href="@{/logout}">ВИХІД</a>
+                    </span>
+                    <a class="nav-item nav-link" th:href="@{/login}" th:if="${user==null}">ВХІД</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</th:block>

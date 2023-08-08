@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>АВТОПАРК</title>
+</head>
+
+<body>
+
+<!-- add navbar -->
+<div th:replace="/fragment/nav::nav"></div>
+<br><br>
+
+<div class="container">
+    <h2 class="display-4 text-center">
+        Автомобілі для справ, відпочинку і настрою</h2>
+    <p class="lead text-center text-muted">
+        Автомобілі для справ, відпочинку і настрою
+
+        Автопарк Avis Україна сформований, в першу чергу, на базі ваших потреб. Таким чином, у ньому представлені автомобілі для будь-яких життєвих ситуацій. Коли ви шукаєте авто для пересування містом, транспорт на важливий захід, щось зручне для справ або містке для великої компанії – будьте впевнені, ми завжди маємо що запропонувати відповідно до вашої мети, погоди та навіть настрою.
+
+        Щоб обрати отпимальну автомобільну групу, перегляньте наш автопарк нижче та зробіть онлайн резервацію.</p>
+    <br><br>
+
+    <table class="table table-bordered table-responsive-sm" style="background-color: lightyellow;">
+        <thead class="thead-dark">
+
+        <tr>
+            <th></th>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Опис</th>
+            <th>Місцезнаходження</th>
+            <th>Ціна/добу</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+
+        <tr th:each="tempCar : ${cars}">
+
+            <td><img th:src="@{${tempCar.imageUrl}}" th:width="500" class="img-fluid" alt="Фото автомобіля"/></td>
+            <td th:text="${tempCar.brand}" />
+            <td th:text="${tempCar.model}" />
+            <td th:text="${tempCar.description}" />
+            <td th:text="${tempCar.location.city}" />
+            <td th:text="${tempCar.priceForADay} + ' грн'" />
+            <td class="text-center">
+                <class th:if="${tempCar.status == 'доступний'}">
+                    <br><br>
+                <a th:href="@{/home/cars/bookCar(carId=${tempCar.id})}" class="btn btn-success btn-md"
+                       name="book" >Забронювати автомобіль</a>
+                </class>
+                <class th:if="${tempCar.status == 'недоступний'}">
+                    Дата повернення:
+                    <br>
+                    <span th:utext="${#dates.format(tempCar.ongoingResvReturnDate, 'dd-MM-yyyy')}"/>
+                    <hr>
+                    Місце повернення:
+                    <br>
+                    <span th:utext="${tempCar.ongoingResvReturnLocationCity}"/>
+                </class>
+            </td>
+    </table>
+</div>
+<br><br>
+</body>
+</html>

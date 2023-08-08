@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Забронювати автомобіль</title>
+</head>
+<body>
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+<div class="container">
+
+    <div class=container>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <br>
+                <h2>Забронювати автомобіль</h2>
+                <hr>
+                <medium class="lead text-center text-muted">заповніть форму нижче, щоб забронювати автомобіль</medium>
+                <br><br>
+            </div>
+        </div>
+        <div class="container-fluid" style="border: 1px solid #cecece;" align="center">
+            <br>
+            <div class="row">
+                <div class="col-lg">
+                    <img th:src="${car.imageUrl}" th:width="800" class="img-fluid" alt="Responsive image"/>
+                    <div>
+                        <h1 class="display-4 text-center">
+                            <span th:utext="${car.brand}"/>
+                            <span th:utext="${car.model}"/>
+                        </h1>
+                        <br>
+                        <div align="left">
+                            <h4>Місцезнаходження:
+                                <small th:utext="${car.location.city}"/>
+                            </h4>
+                            <h4>Опис:
+                                <small th:utext="${car.description}"/>
+                            </h4>
+                            <h4>Ціна за добу:
+                                <small th:utext="${car.priceForADay} + ' грн'"/>
+                            </h4>
+                            <h4>Найближчі бронювання:
+                                <div class="col-md-6">
+                                    <small th:each="thisReservation : ${car.upcomingReservations}">
+                                        <br>
+                                        <span>[Дата оренди: </span>
+                                        <span th:utext="${#dates.format(thisReservation.rentDate, 'dd-MM-yyyy')}"/>
+                                        <br>
+                                        <span>Дата повернення: </span>
+                                        <span th:utext="${#dates.format(thisReservation.returnDate, 'dd-MM-yyyy')}"/>
+                                        <br>
+                                        <span>Місце оренди:</span>
+                                        <span th:utext="${thisReservation.rentLocationCity}"/>
+                                        <br>
+                                        <span>Місце повернення: </span>
+                                        <span th:utext="${thisReservation.returnLocationCity}+']'"/>
+                                        <br>
+                                    </small>
+                                </div>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div container>
+        <form class="form-horizontal" role="form" th:action="@{/home/cars/bookCar}" method="POST"
+              enctype="multipart/form-data"
+              th:object="${reservation}">
+            <input type="hidden" th:field="${reservation.id}"/>
+
+
+            <input type="hidden" th:field="${reservation.car}" th:value="${car}"/>
+            <br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <medium class="lead text-center text-muted">
+                        якщо автомобіль має найближчі бронювання, зверніть увагу на дати та місця оренди автомобіля —
+                        не можна зарезервувати машину на час, коли вона вже заброньована;
+                        якщо ви орендуєте автомобіль до фіксованої дати майбутнього бронювання,
+                        ви повинні повернути його до місця, звідки його заберуть, під час наступного бронювання:
+                        <br>
+                        інакше ваше бронювання не буде прийнято!
+                    </medium>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="rentDate">Дата оренди</label>
+                </div>
+                <div class="col-md-6">
+                    <div class=form-group>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="date" th:field="${reservation.rentDate}" class="form-control" id="rentDate"
+                                   required>
+                            <span th:errors="${reservation.rentDate}" class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="returnDate">Дата повернення</label>
+                </div>
+                <div class="col-md-6">
+                    <div class=form-group>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="date" th:field="${reservation.returnDate}" class="form-control" id="returnDate"
+                                   required>
+                            <span th:errors="${reservation.returnDate}" class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="returnLocation">Місце повернення</label>
+                </div>
+                <div class="col-md-6">
+                    <div class=form-group>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <select th:field="${reservation.returnLocation.city}" class="form-control" id="returnLocation" required>
+                                <option value=""> -- виберіть поле --</option>
+                                <option th:each="location : ${locations}"
+                                        th:value="${location.city}"
+                                        th:utext="${location.city}"/>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-success btn-md">Забронювати автомобіль</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <a th:href="@{/home/cars}">Назад до списку автомобілів</a>
+</div>
+</div>
+<br><br>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Мій профіль</title>
+</head>
+
+<body>
+
+<!-- add navbar -->
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="text-center">
+            <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="text-center">
+            <div class="alert alert-danger" role="alert" th:if="${msg1}" th:utext="${msg1}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="display-4 text-center">Вітаємо <span th:utext="${user.firstname}"></span></h1>
+    <p class="lead text-center text-muted">це ваша панель облікового запису</p>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <br>
+                <h2>Інформація про користувача</h2>
+                <hr>
+            </div>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Ім'я</th>
+                <td th:text="${user.firstname}"/>
+            </tr>
+            <tr>
+                <th>Прізвище</th>
+                <td th:text="${user.lastname}"/>
+            </tr>
+            <tr>
+                <th>Електронна пошта</th>
+                <td th:text="${user.email}"/>
+            </tr>
+            </tbody>
+        </table>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Ваші замовлення</h2>
+                    <hr>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive-sm" style="background-color: #e2fde4;">
+                <thead class="thead-dark">
+
+                <tr>
+                    <th>Заброньована машина</th>
+                    <th>Дата оренди</th>
+                    <th>Дата повернення</th>
+                    <th>Місце оренди</th>
+                    <th>Місце повернення</th>
+                    <th>Ціна</th>
+                    <th>Дія/статус</th>
+                </tr>
+                </thead>
+
+                <tr th:each="tempReservation : ${reservations}">
+
+                    <td>
+                        <div th:text="${tempReservation.car.brand}"/>
+                        <div th:text="${tempReservation.car.model}"/>
+                    </td>
+
+                    <td th:text="${#dates.format(tempReservation.rentDate, 'dd-MM-yyyy')}"/>
+                    <td th:text="${#dates.format(tempReservation.returnDate, 'dd-MM-yyyy')}"/>
+
+                    <td th:text="${tempReservation.rentLocationCity}"/>
+                    <td th:text="${tempReservation.returnLocationCity}"/>
+
+                    <td th:text="${tempReservation.price} + ' грн'"/>
+
+                    <td class="text-center">
+                        <form th:action="@{/home/account/cancelBooking(reservationId=${tempReservation.id})}"
+                              method="POST">
+                            <input type="hidden" name="cancel" th:value="${tempReservation.id}"/>
+                            <div th:if="${tempReservation.status == 'заброньовано'}">
+                            <input type="submit" value="Скасувати бронювання" class="btn btn-danger btn-md"
+                                   onclick="if(!(confirm('Ви впевнені, що бажаєте скасувати своє бронювання?'))) return false">
+                                <br>
+                                <hr>
+                                <span th:utext="'Статус: ' + ${tempReservation.status}"></span>
+                            </div>
+                            <div th:if="${tempReservation.status == 'триває бронювання' || tempReservation.status == 'завершено'}">
+                                <span th:utext="'Статус: ' + ${tempReservation.status}"></span>
+                            </div>
+                        </form>
+                        </a>
+                    </td>
+            </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9 text-right">
+                        <br>
+                        <hr>
+                        <h2 th:text="'Сума до сплати: ' + ${totalPrice} + ' грн'"/>
+                        <p class="lead text-muted">Оплачується при поверненні автомобіля</p>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

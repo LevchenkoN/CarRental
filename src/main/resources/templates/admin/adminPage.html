@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>СТОРІНКА АДМІНІСТРАТОРА</title>
+<body>
+
+<!-- add navbar -->
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+<div class="container">
+    <h1 class="display-4 text-center">Привіт <span th:utext="${user.firstname}"></span></h1>
+    <p class="lead text-center text-muted">це ваша сторінка адміністратора</p>
+</div>
+
+<div class="container">
+
+    <div class=container>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <br>
+                <h2>Оновити автопарк</h2>
+                <hr>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive-sm" style="background-color: lightgoldenrodyellow;">
+            <thead class="thead-dark">
+
+            <tr>
+                <th>Фото</th>
+                <th>Бренд</th>
+                <th>Модель</th>
+                <th>Опис</th>
+                <th>Місцезнаходження</th>
+                <th>Ціна/добу</th>
+                <th>Статус</th>
+            </tr>
+            </thead>
+
+            <tr th:each="tempCar : ${cars}">
+
+                <td><img th:src="@{${tempCar.imageUrl}}" th:width="500" th:height="auto"  class="img-fluid" alt="Responsive image"/></td>
+                <td th:text="${tempCar.brand}"/>
+                <td th:text="${tempCar.model}"/>
+                <td th:text="${tempCar.description}"/>
+                <td th:text="${tempCar.location.city}"/>
+                <td th:text="${tempCar.priceForADay}  + ' грн'"/>
+                <td class="text-center">
+                    <a th:href="@{/admin/updateCar(carId=${tempCar.id})}"
+                       class="btn btn-success btn-sm">
+                        Update
+                    </a>
+                    <br><br>
+                    <a th:href="@{/admin/deleteCar(carId=${tempCar.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="if(!(confirm('Ви впевнені, що хочете видалити цей автомобіль?'))) return false">
+                        Delete
+                    </a>
+                </td>
+        </table>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Додати новий автомобіль</h2>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6"></div>
+                    <hr>
+                    <div class="text-right">
+                        <a th:href="@{/admin/addCar}"
+                           class="btn btn-success btn-md center-block">Додати</a>
+                    </div>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Оновити відділення</h2>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6"></div>
+                    <hr>
+                    <p class="lead text-muted">якщо ви хочете оновити або видалити відділення, перемістіть свої автомобілі в інше місце
+                        звільніть це відділення</p>
+                    <br>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive-sm" style="background-color: lightcyan;">
+                <thead class="thead-dark">
+
+                <tr>
+                    <th>Місто</th>
+                    <th>Адреса</th>
+                    <th>Контакти</th>
+                    <th>Автомобілі</th>
+                    <th>Дія</th>
+                </tr>
+                </thead>
+
+                <tr th:each="tempLocation : ${locations}">
+
+                    <td th:text="${tempLocation.city}"/>
+                    <td th:text="${tempLocation.address}"/>
+                    <td th:text="${tempLocation.phoneNumber}"/>
+                    <td th:text="${tempLocation.carsNumber}"/>
+                    <td class="text-center">
+                        <a th:href="@{/admin/updateLocation(locationId=${tempLocation.id})}"
+                           class="btn btn-success btn-md center-block" name="update"
+                           th:if="${tempLocation.carsNumber == 0}">
+                            Update
+                        </a>
+                        <button type="submit" class="btn btn-success btn-md center-block"
+                                name="update" th:if="${tempLocation.carsNumber > 0}" disabled>
+                            Update
+                        </button>
+                        <br><br>
+
+                        <a th:href="@{/admin/deleteLocation(locationId=${tempLocation.id})}"
+                           class="btn btn-danger btn-md center-block" th:if="${tempLocation.carsNumber == 0}"
+                           onclick="if(!(confirm('Ви впевнені, що хочете видалити це відділення?'))) return false">
+                            Delete
+
+                        </a>
+                        <button type="submit" class="btn btn-danger btn-md center-block" name="delete"
+                                th:if="${tempLocation.carsNumber > 0}" disabled>
+                            Delete
+                        </button>
+                    </td>
+
+            </table>
+        </div>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Додати нове відділення</h2>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6"></div>
+                    <hr>
+                    <div class="text-right">
+                        <a th:href="@{/admin/addLocation}"
+                           class="btn btn-success btn-md center-block">Додати</a>
+                    </div>
+                    </h2>
+                </div>
+            </div>
+            <br><br>
+        </div>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Поточні бронювання</h2>
+                    <hr>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive-sm" style="background-color: #e2fde4;">
+                <thead class="thead-dark">
+
+                <tr>
+                    <th>Користувач</th>
+                    <th>Автомобіль</th>
+                    <th>Дата оренди</th>
+                    <th>Дата повернення</th>
+                    <th>Орендовоно</th>
+                    <th>Повернути</th>
+                    <th>Ціна</th>
+                </tr>
+                </thead>
+
+                <tr th:each="tempResv : ${ongoingReservations}">
+
+                    <td th:text="${tempResv.user.firstname} + '&nbsp;' + ${tempResv.user.lastname}"/>
+                    <td th:text="${tempResv.car}"/>
+                    <td th:text="${#dates.format(tempResv.rentDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${#dates.format(tempResv.returnDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${tempResv.rentLocationCity}"/>
+                    <td th:text="${tempResv.returnLocationCity}"/>
+                    <td th:text="${tempResv.price} + '&nbsp;грн'"/>
+            </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9 text-right">
+                        <br>
+                        <hr>
+                        <h2 th:text="'Прибуток від поточної оренди: ' + ${ongoingRentsProfit} + ' грн'"/>
+                        <br><br>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Завершені бронювання</h2>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive-sm" style="background-color: lightpink;">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Користувач</th>
+                    <th>Автомобіль</th>
+                    <th>Дата оренди</th>
+                    <th>Дата повернення</th>
+                    <th>Орендовоно</th>
+                    <th>Повернути</th>
+                    <th>Ціна</th>
+                </tr>
+                </thead>
+
+                <tr th:each="tempResv : ${pastReservations}">
+
+                    <td th:text="${tempResv.user.firstname} + '&nbsp;' + ${tempResv.user.lastname}"/>
+                    <td th:text="${tempResv.car}"/>
+                    <td th:text="${#dates.format(tempResv.rentDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${#dates.format(tempResv.returnDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${tempResv.rentLocationCity}"/>
+                    <td th:text="${tempResv.returnLocationCity}"/>
+                    <td th:text="${tempResv.price} + '&nbsp;грн'"/>
+            </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9 text-right">
+                        <br>
+                        <hr>
+                        <h2 th:text="'Прибуток від завершених оренд: ' + ${pastRentsProfit} + ' грн'"/>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=container>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <br>
+                    <h2>Заплановані бронювання</h2>
+                    <hr>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive-sm" style="background-color: lightyellow;">
+                <thead class="thead-dark">
+
+                <tr>
+                    <th>Користувач</th>
+                    <th>Автомобіль</th>
+                    <th>Дата оренди</th>
+                    <th>Дата повернення</th>
+                    <th>Орендовоно</th>
+                    <th>Повернути</th>
+                    <th>Ціна</th>
+                </tr>
+                </thead>
+
+                <tr th:each="tempResv : ${upcomingReservations}">
+
+                    <td th:text="${tempResv.user.firstname} + '&nbsp;' + ${tempResv.user.lastname}"/>
+                    <td th:text="${tempResv.car}"/>
+                    <td th:text="${#dates.format(tempResv.rentDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${#dates.format(tempResv.returnDate, 'dd&#8209;MM&#8209;yyyy')}"/>
+                    <td th:text="${tempResv.rentLocationCity}"/>
+                    <td th:text="${tempResv.returnLocationCity}"/>
+                    <td th:text="${tempResv.price} + '&nbsp;грн'"/>
+            </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9 text-right">
+                        <br>
+                        <hr>
+                        <h2 th:text="'Прибуток від майбутньої оренди: ' + ${upcomingRentsProfit} + ' грн'"/>
+                        <br><br>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9 text-right">
+                            <br>
+                            <hr>
+                            <h2 th:text="'Загальний прибуток: ' + ${totalProfit} + ' грн'"/>
+                            <br><br>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

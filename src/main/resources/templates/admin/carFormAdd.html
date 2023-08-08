@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>АВТОМОБІЛЬ</title>
+</head>
+<body>
+
+<div th:replace="/fragment/nav::nav"></div>
+<br><br>
+
+
+<div class="container">
+
+    <div class=container>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <br>
+                <h2>Автомобіль</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="container">
+            <form class="form-horizontal" role="form" th:action="@{/admin/saveCar}" method="POST"
+                  enctype="multipart/form-data"
+                  th:object="${car}">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="image">Фото</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="far fa-images"></i>
+                                </div>
+                                <input type="file" name="file" multiple id="image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="brand">Бренд</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="fas fa-car"></i></div>
+                                <input type="text" th:field="${car.brand}" class="form-control" id="brand">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="model">Модель</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="fas fa-car"></i></div>
+                                <input type="text" th:field="${car.model}" class="form-control" id="model">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="description">Опис</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="fas fa-align-right"></i></div>
+                                <textarea id="description" th:field="${car.description}" class="md-textarea form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="location">Відділення</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="fas fa-map-marker-alt"></i></div>
+                                <select th:field="${car.location.city}" class="form-control" id="location" required>
+                                    <option value=""> -- зробіть вибір --</option>
+                                    <option th:each="location : ${locations}"
+                                            th:value="${location.city}"
+                                            th:utext="${location.city}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 field-label-responsive">
+                        <label for="priceForADay">Ціна/добу</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 2.6rem">
+                                    <i class="fas fa-money-bill-wave"></i></div>
+                                <input type="number" th:field="${car.priceForADay}" class="form-control"
+                                       id="priceForADay">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-success btn-md">Зберегти</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <a th:href="@{/admin}">Повернутися до сторінки адміністратора</a>
+    </div>
+</div>
+<br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

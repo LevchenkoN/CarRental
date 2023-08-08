@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>ПРО НАС</title>
+</head>
+
+<body>
+
+<!-- add navbar -->
+
+<div th:replace="/fragment/nav::nav"></div>
+
+<br><br>
+
+<div class="container">
+    <h1 class="display-4 text-center">Про нас</span></h1>
+    <p class="lead text-center text-muted">Ми там, де завжди потрібні.</p>
+    <br><br>
+
+    <div class="container-fluid" align="center">
+        <main class="content">
+            <div class="container">
+                <div class="content__thumb-thumb">
+                    <picture>
+                        <source srcset="https://narscars.com.ua/images/img-about-us-small.webp"
+                                media="(max-width: 768px)" type="image/webp">
+                        <source srcset="https://narscars.com.ua/images/img-about-us-big.webp"
+                                media="(min-width: 769px)" type="image/webp">
+                        <source srcset="https://narscars.com.ua/images/img-about-us-small.png"
+                                media="(max-width: 768px)" type="image/png">
+                        <source srcset="https://narscars.com.ua/images/img-about-us-big.png"
+                                media="(min-width: 769px)" type="image/png">
+                        <img src="https://narscars.com.ua/images/img-about-us-small.png" loading="lazy" width="100%"
+                             height="auto" alt="Про нас"></picture>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="content__document"><h2>Наша компанія</h2>
+                <p>Наша компанія – це професійний автопрокат в Україні, який надає широкий вибір автомобілів на
+                    будь-який
+                    смак та бюджет. Наша компанія є одним з найкращих у галузі, і ми прагнемо надати високоякісний
+                    сервіс та безпечне пересування нашим клієнтам.</p>
+                <p>Ми пропонуємо автомобілі різних класів та марок, починаючи від економічних моделей і закінчуючи
+                    преміальними автомобілями. Всі наші автомобілі знаходяться у відмінному стані та проходять
+                    регулярну технічну перевірку, щоб гарантувати їхню надійність та безпеку.</p>
+                <p>Ми також пропонуємо додаткові послуги, такі як оренда GPS-навігації, оренда дитячих крісел,
+                    оренда автомобільних роутерів та інші. Ми робимо все можливе, щоб наші клієнти отримали
+                    максимальне задоволення від оренди автомобіля.</p>
+                <p>Наша команда професійних менеджерів завжди готова допомогти вам у виборі автомобіля та додаткових
+                    послуг, відповісти на всі ваші запитання та забезпечити швидке та просте оформлення оренди. Ми
+                    також пропонуємо гнучкі умови оренди, а також можливість доставки автомобіля в будь-яке зручне
+                    для вас місце.</p>
+                <p>Якщо ви шукаєте надійний та якісний автопрокат в Україні, зверніться до нас у нашої компанії, і ми
+                    гарантуємо, що ви залишитеся задоволені нашим сервісом.</p>
+                <p>&nbsp;</p>
+                <h2>Історія</h2>
+                <table cellpadding="0" cellspacing="0" width="100%" class="table table-borderless table-sm">
+                    <tbody>
+                    <tr>
+                        <td width="1"><b>2022</b></td>
+                        <td>—</td>
+                        <td><p>Можливість виїжджати за кордон на наших автомобілях (пункти відачі у Польщі)</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>2020</b></td>
+                        <td>—</td>
+                        <td><p>Наша компанія збільшує свій автопарк до +180 автомобілів та 40 співробітників.</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>2019</b></td>
+                        <td>—</td>
+                        <td><p>Компанія відкрила офіси у міжнародних аеропортах України:</p>
+                            <ul>
+                                <li>Аеропорт Харків – так!</li>
+                                <li>Аеропорт Одеса – так!</li>
+                                <li>Аеропорт Львів — так!</li>
+                                <li>Аеропорт Жуляні – так!</li>
+                                <li>Аеропорт Бориспіль — так!</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>2018</b></td>
+                        <td>—</td>
+                        <td><p>Компанія відкрила ще офіси у найбільших містах країни: Київ, Одеса, Дніпро.</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>2017</b></td>
+                        <td>—</td>
+                        <td><p>Компанія відкрила офіси у найбільших містах країни: Харків, Львів.</p></td>
+                    </tr>
+                    <tr>
+                        <td><b>2016</b></td>
+                        <td>—</td>
+                        <td><p>З'явилася Торгова марка Наша компанія, та з того часу стала однією з найпізнаваніших на
+                            ринку оренди автотранспорту України.</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <br><br>
+</div>
+<br><br>
+</body>
+</html>
